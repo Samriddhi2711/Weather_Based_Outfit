@@ -15,6 +15,8 @@ import json
 import faiss
 import numpy as np
 import dotenv
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # ---------- Load env vars ----------
 dotenv.load_dotenv()  
@@ -29,6 +31,13 @@ openai.api_key = OPENAI_API_KEY
 
 # ---------- FastAPI app ----------
 app = FastAPI(title="Weather-aware Outfit Recommender (FAISS)")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # ya specific domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ---------- Pydantic models ----------
 class RecommendRequest(BaseModel):
